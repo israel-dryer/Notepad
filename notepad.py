@@ -1,5 +1,5 @@
 import PySimpleGUI as sg 
-#sg.ChangeLookAndFeel('Dark') # change style
+sg.ChangeLookAndFeel('Dark') # change style
 
 filename = None
 
@@ -12,12 +12,13 @@ menu_layout = [['File',[file_new, file_open, file_save,'Save As','---','Exit']],
                ['Tools',['Word Count']],
                ['Help',['About']]]
 layout = [[sg.Menu(menu_layout)],
-          [sg.Text('/New file/', size=(500,1), font=('Consolas',10), key='_INFO_')],
+          [sg.Text('> New file <', size=(500,1), font=('Consolas',10), key='_INFO_')],
           [sg.Multiline(font=('Consolas',12), size=(500,100), key='_BODY_')]]
 window = sg.Window('Notepad', layout=layout, margins=(0,0), size=(1000,600), resizable=True, return_keyboard_events=True)
 
 def new_file():
     window['_BODY_'].update(value=None)
+    window['_INFO_'].update(value='> New File <')
 
 def open_file():
     ''' open file and update the infobar '''
@@ -33,8 +34,7 @@ def open_file():
 def save_file(filename):
     ''' save file instantly if already open; otherwise use `save-as` popup '''
     if filename is None:
-        filename = sg.popup_get_file('Save File', save_as=True, default_path=filename, no_window=True)
-        window['_INFO_'].update(value=filename)
+        save_file_as()
     else:
         with open(filename,'w') as f:
             f.write(values.get('_BODY_'))
@@ -43,9 +43,13 @@ def save_file(filename):
 def save_file_as():
     ''' save new file or save existing file with another name '''
     filename = sg.popup_get_file('Save File', save_as=True, no_window=True)
-    with open(filename,'w') as f:
-        f.write(values.get('_BODY_'))
-    window['_INFO_'].update(value=filename)
+    if filename is None:
+        return
+    else:
+        with open(filename,'w') as f:
+            f.write(values.get('_BODY_'))
+        window['_INFO_'].update(value=filename)
+    return filename
 
 def word_count():
     ''' display estimated word count '''
@@ -69,8 +73,8 @@ while True:
     if event in [file_save,'s:83']:
         save_file(filename)
     if event == 'Save As':
-        save_file_as()   
+        filename = save_file_as()   
     if event == 'Word Count':
         word_count() 
     if event == 'About':
-        about_me()  
+        about_me()
