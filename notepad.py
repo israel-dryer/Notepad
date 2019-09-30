@@ -19,13 +19,13 @@ window = sg.Window('Notepad', layout=layout, margins=(0,0), size=(1000,600), res
 def new_file():
     window['_BODY_'].update(value=None)
     window['_INFO_'].update(value='> New File <')
+    filename = None
+    return filename
 
 def open_file():
     ''' open file and update the infobar '''
     filename = sg.popup_get_file('Open File', no_window=True)
-    if filename == None:
-        return
-    else:
+    if filename not in (None, ''):
         with open(filename, 'r') as f:
             window['_BODY_'].update(value=f.read())
         window['_INFO_'].update(value=filename)
@@ -33,19 +33,17 @@ def open_file():
 
 def save_file(filename):
     ''' save file instantly if already open; otherwise use `save-as` popup '''
-    if filename is None:
-        save_file_as()
-    else:
+    if filename not in (None, ''):
         with open(filename,'w') as f:
             f.write(values.get('_BODY_'))
         window['_INFO_'].update(value=filename)
+    else:
+        save_file_as()
 
 def save_file_as():
     ''' save new file or save existing file with another name '''
     filename = sg.popup_get_file('Save File', save_as=True, no_window=True)
-    if filename is None:
-        return
-    else:
+    if filename not in (None, ''):
         with open(filename,'w') as f:
             f.write(values.get('_BODY_'))
         window['_INFO_'].update(value=filename)
@@ -53,7 +51,7 @@ def save_file_as():
 
 def word_count():
     ''' display estimated word count '''
-    words = values.get('_BODY_').split(' ')
+    words = values['_BODY_'].split(' ')
     words_clean = [w for w in words if w!='\n']
     word_count = len(words_clean)
     sg.PopupQuick(f'Word Count: {word_count:,d}', auto_close=False)
@@ -65,12 +63,11 @@ while True:
     event, values = window.read()
     if event is None or event == 'Exit':
         break
-    if event in [file_new,'n:78']:
-        new_file()
-        filename = None
-    if event in [file_open,'o:79']:
+    if event in (file_new,'n:78'):
+        filename = new_file()
+    if event in (file_open,'o:79'):
         filename = open_file()
-    if event in [file_save,'s:83']:
+    if event in (file_save,'s:83'):
         save_file(filename)
     if event == 'Save As':
         filename = save_file_as()   
