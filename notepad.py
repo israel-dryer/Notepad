@@ -11,6 +11,7 @@ sg.ChangeLookAndFeel('BrownBlue') # change style
 
 WIN_W = 90
 WIN_H = 25
+STARTUP = True
 
 filename = None
 
@@ -77,7 +78,11 @@ def about_me():
     sg.PopupQuick('"All great things have small beginnings" - Peter Senge', auto_close=False)
 
 while True:
-    event, values = window.read()
+    event, values = window.read(timeout=1)
+    if STARTUP:
+        window.maximize()
+        window['_BODY_'].expand(expand_x=True, expand_y=True)
+        STARTUP = False
 
     if event in (None, 'Exit'):
         break
