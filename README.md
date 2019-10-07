@@ -1,6 +1,8 @@
 # Notepad
  A minimal notepad application designed with [PySimpleGUI](https://pysimplegui.readthedocs.io/en/latest/), but with a few bonus features. This is a great application to start out with if you want to build something useful and are looking for experience building out a GUI application. The great thing is that this is highly customizable as you can see from [another project](https://github.com/israel-dryer/Text-Code-Editor) that I'm working on.
  
+ Check out the code for yourself on [Trinket](https://trinket.io/pygame/cc8c09a20d)
+ 
 ![](images/example.png) 
 
 Standard menu items with keyboard short-cuts
