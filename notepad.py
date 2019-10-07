@@ -28,26 +28,25 @@ layout = [[sg.Menu(menu_layout)],
 window = sg.Window('Notepad', layout=layout, margins=(0,0), resizable=True, return_keyboard_events=True)
 
 def new_file():
-    ''' Create new file. This function will clear the display and reset the info bar'''
     window['_BODY_'].update(value=None)
     window['_INFO_'].update(value='> New File <')
     filename = None
     return filename
 
 def open_file():
-    ''' Open file and update the infobar '''
+    ''' open file and update the infobar '''
     try:
         filename = sg.popup_get_file('Open File', no_window=True)
     except:
         return
-    if filename not in (None, ''):
+    if filename not in (None, '') and not isinstance(filename, tuple):
         with open(filename, 'r') as f:
             window['_BODY_'].update(value=f.read())
         window['_INFO_'].update(value=filename)
     return filename
 
 def save_file(filename):
-    ''' Save file instantly if already open; otherwise use `save-as` popup '''
+    ''' save file instantly if already open; otherwise use `save-as` popup '''
     if filename not in (None, ''):
         with open(filename,'w') as f:
             f.write(values.get('_BODY_'))
@@ -56,19 +55,19 @@ def save_file(filename):
         save_file_as()
 
 def save_file_as():
-    ''' Save new file or save existing file with another name '''
+    ''' save new file or save existing file with another name '''
     try:
         filename = sg.popup_get_file('Save File', save_as=True, no_window=True)
     except:
         return
-    if filename not in (None, ''):
+    if filename not in (None, '') and not isinstance(filename, tuple):
         with open(filename,'w') as f:
             f.write(values.get('_BODY_'))
         window['_INFO_'].update(value=filename)
     return filename
 
 def word_count():
-    ''' Display estimated word count '''
+    ''' display estimated word count '''
     words = values['_BODY_'].split(' ')
     words_clean = [w for w in words if w!='\n']
     word_count = len(words_clean)
