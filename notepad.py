@@ -29,7 +29,7 @@ window: object = sg.Window('Notepad', layout=layout, margins=(0,0), resizable=Tr
 
 def new_file() -> str:
     ''' Reset body and info bar, and clear filename variable '''
-    window['_BODY_'].update(value=None)
+    window['_BODY_'].update(value='')
     window['_INFO_'].update(value='> New File <')
     filename = None
     return filename
