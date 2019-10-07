@@ -1,10 +1,8 @@
 '''
   A minimalist Notepad built with the PySimpleGUI TKinter framework
-  
   Author:     Israel Dryer
   Email:      israel.dryer@gmail.com
   Modified:   2019-10-07
-  
 '''
 import PySimpleGUI as sg 
 sg.ChangeLookAndFeel('BrownBlue') # change style
@@ -22,12 +20,12 @@ file_save: str = 'Save............(CTRL+S)'
 menu_layout: list = [['File',[file_new, file_open, file_save,'Save As','---','Exit']],
                      ['Tools',['Word Count']],
                      ['Help',['About']]]
+
 layout: list = [[sg.Menu(menu_layout)],
                 [sg.Text('> New file <', font=('Consolas',10), size=(90,1), key='_INFO_')],
                 [sg.Multiline(font=('Consolas',12), size=(WIN_W, WIN_H), key='_BODY_')]]
 
 window: object = sg.Window('Notepad', layout=layout, margins=(0,0), resizable=True, return_keyboard_events=True)
-
 
 def new_file() -> str:
     ''' Reset body and info bar, and clear filename variable '''
@@ -35,7 +33,6 @@ def new_file() -> str:
     window['_INFO_'].update(value='> New File <')
     filename = None
     return filename
-
 
 def open_file() -> str:
     ''' Open file and update the infobar '''
@@ -49,7 +46,6 @@ def open_file() -> str:
         window['_INFO_'].update(value=filename)
     return filename
 
-
 def save_file(filename: str):
     ''' Save file instantly if already open; otherwise use `save-as` popup '''
     if filename not in (None, ''):
@@ -58,7 +54,6 @@ def save_file(filename: str):
         window['_INFO_'].update(value=filename)
     else:
         save_file_as()
-
 
 def save_file_as() -> str:
     ''' Save new file or save existing file with another name '''
@@ -72,19 +67,14 @@ def save_file_as() -> str:
         window['_INFO_'].update(value=filename)
     return filename
 
-
 def word_count():
     ''' Display estimated word count '''
-    words: list = values['_BODY_'].split(' ')
-    words_clean: list = [w for w in words if w!='\n']
-    word_count: int = len(words_clean)
+    words: list = [w for w in values['_BODY_'].split(' ') if w!='\n']
+    word_count: int = len(words)
     sg.PopupQuick('Word Count: {:,d}'.format(word_count), auto_close=False)
 
-
 def about_me():
-    ''' Display a pithy message '''
     sg.PopupQuick('"All great things have small beginnings" - Peter Senge', auto_close=False)
-
 
 while True:
     event, values = window.read(timeout=1)
