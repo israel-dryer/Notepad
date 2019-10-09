@@ -2,7 +2,7 @@
   A minimalist Notepad built with the PySimpleGUI TKinter framework
   Author:     Israel Dryer
   Email:      israel.dryer@gmail.com
-  Modified:   2019-10-07
+  Modified:   2019-10-09
 '''
 import PySimpleGUI as sg 
 sg.ChangeLookAndFeel('BrownBlue') # change style
@@ -12,7 +12,7 @@ WIN_H: int = 25
 STARTUP: bool = True
 filename:str = None
 
-# string varables to shorten loop and menu code
+# string variables to shorten loop and menu code
 file_new: str = 'New............(CTRL+N)'
 file_open: str = 'Open..........(CTRL+O)'
 file_save: str = 'Save............(CTRL+S)'
@@ -22,7 +22,7 @@ menu_layout: list = [['File',[file_new, file_open, file_save,'Save As','---','Ex
                      ['Help',['About']]]
 
 layout: list = [[sg.Menu(menu_layout)],
-                [sg.Text('> New file <', font=('Consolas',10), size=(90,1), key='_INFO_')],
+                [sg.Text('> New file <', font=('Consolas',10), size=(WIN_W,1), key='_INFO_')],
                 [sg.Multiline(font=('Consolas',12), size=(WIN_W, WIN_H), key='_BODY_')]]
 
 window: object = sg.Window('Notepad', layout=layout, margins=(0,0), resizable=True, return_keyboard_events=True)
