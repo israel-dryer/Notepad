@@ -3,7 +3,7 @@
  
  Check out the code for yourself on [Trinket](https://trinket.io/pygame/cc8c09a20d)
  
-![](images/example.png) 
+![](images/window.png) 
 
 Standard menu items with keyboard short-cuts
 
@@ -13,6 +13,6 @@ Includes a word-count function
 
 ![](images/word-count.png)
 
-Theme the application with a simple call to `sg.change_look_and_feel('Dark')`... as an example. There are many built-in themes with [PySimpleGUI](https://pysimplegui.readthedocs.io/en/latest/).
+Theme the application with a simple call to `sg.change_look_and_feel('Black')`... as an example. There are many built-in themes with [PySimpleGUI](https://pysimplegui.readthedocs.io/en/latest/).
 
 ![](images/dark-mode.png)
