@@ -3,7 +3,7 @@
  
  Check out the code for yourself on [Trinket](https://trinket.io/pygame/cc8c09a20d)
  
-![](images/window.png) 
+
 
 Standard menu items with keyboard short-cuts
 
