@@ -2,7 +2,7 @@
   A minimalist Notepad built with the PySimpleGUI TKinter framework
   Author:     Israel Dryer
   Email:      israel.dryer@gmail.com
-  Modified:   2019-10-09
+  Modified:   2019-10-11
 '''
 import PySimpleGUI as sg 
 sg.ChangeLookAndFeel('BrownBlue') # change style
@@ -17,15 +17,15 @@ file_new: str = 'New............(CTRL+N)'
 file_open: str = 'Open..........(CTRL+O)'
 file_save: str = 'Save............(CTRL+S)'
 
-menu_layout: list = [['File',[file_new, file_open, file_save,'Save As','---','Exit']],
-                     ['Tools',['Word Count']],
-                     ['Help',['About']]]
+menu_layout: list = [['File', [file_new, file_open, file_save, 'Save As', '---', 'Exit']],
+                     ['Tools', ['Word Count']],
+                     ['Help', ['About']]]
 
 layout: list = [[sg.Menu(menu_layout)],
-                [sg.Text('> New file <', font=('Consolas',10), size=(WIN_W,1), key='_INFO_')],
-                [sg.Multiline(font=('Consolas',12), size=(WIN_W, WIN_H), key='_BODY_')]]
+                [sg.Text('> New file <', font=('Consolas', 10), size=(WIN_W, 1), key='_INFO_')],
+                [sg.Multiline(font=('Consolas', 12), size=(WIN_W, WIN_H), key='_BODY_')]]
 
-window: object = sg.Window('Notepad', layout=layout, margins=(0,0), resizable=True, return_keyboard_events=True)
+window: object = sg.Window('Notepad', layout=layout, margins=(0, 0), resizable=True, return_keyboard_events=True)
 
 def new_file() -> str:
     ''' Reset body and info bar, and clear filename variable '''
@@ -85,11 +85,11 @@ while True:
 
     if event in (None, 'Exit'):
         break
-    if event in (file_new,'n:78'):
+    if event in (file_new, 'n:78'):
         filename = new_file()
-    if event in (file_open,'o:79'):
+    if event in (file_open, 'o:79'):
         filename = open_file()
-    if event in (file_save,'s:83'):
+    if event in (file_save, 's:83'):
         save_file(filename)
     if event in ('Save As',):
         filename = save_file_as()   
