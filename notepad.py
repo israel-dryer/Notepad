@@ -2,14 +2,13 @@
   A minimalist Notepad built with the PySimpleGUI TKinter framework
   Author:     Israel Dryer
   Email:      israel.dryer@gmail.com
-  Modified:   2019-10-11
+  Modified:   2019-10-13
 '''
 import PySimpleGUI as sg 
 sg.ChangeLookAndFeel('BrownBlue') # change style
 
 WIN_W: int = 90
 WIN_H: int = 25
-STARTUP: bool = True
 filename:str = None
 
 # string variables to shorten loop and menu code
@@ -26,6 +25,9 @@ layout: list = [[sg.Menu(menu_layout)],
                 [sg.Multiline(font=('Consolas', 12), size=(WIN_W, WIN_H), key='_BODY_')]]
 
 window: object = sg.Window('Notepad', layout=layout, margins=(0, 0), resizable=True, return_keyboard_events=True)
+window.read(timeout=1)
+window.maximize()
+window['_BODY_'].expand(expand_x=True, expand_y=True)
 
 def new_file() -> str:
     ''' Reset body and info bar, and clear filename variable '''
@@ -77,11 +79,7 @@ def about_me():
     sg.PopupQuick('"All great things have small beginnings" - Peter Senge', auto_close=False)
 
 while True:
-    event, values = window.read(timeout=1)
-    if STARTUP:
-        window.maximize()
-        window['_BODY_'].expand(expand_x=True, expand_y=True)
-        STARTUP = False
+    event, values = window.read()
 
     if event in (None, 'Exit'):
         break
