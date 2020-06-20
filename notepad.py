@@ -68,7 +68,6 @@ def about_me():
 
 while True:
     event, values = window.read()
-    print(event)
     if event in('Exit', None):
         break
     if event in ('New (Ctrl+N)', 'n:78'):
