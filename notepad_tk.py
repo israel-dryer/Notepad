@@ -14,7 +14,6 @@ class Notepad(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Notepad")
-        # self.state('zoomed') # does not work for X window managers (Linux)
         self.menubar = tk.Menu(self, tearoff=False)
         self['menu'] = self.menubar
         self.menu_file = tk.Menu(self.menubar, tearoff=False)
@@ -40,7 +39,11 @@ class Notepad(tk.Tk):
         self.text.pack(fill=tk.BOTH, expand=tk.YES)
         self.file = None
 
-    def open_file(self):
+        self.bind("<Control-n>", self.new_file)
+        self.bind("<Control-s>", self.save_file)
+        self.bind("<Control-o>", self.open_file)
+
+    def open_file(self, event=None):
         """Open file and update infobar"""
         file = filedialog.askopenfilename(title='Open', filetypes=(('Text', '*.txt'), ('All Files', '*.*')))
         if file:
@@ -49,13 +52,13 @@ class Notepad(tk.Tk):
             self.text.insert(tk.END, self.file.read_text())
             self.info_var.set(self.file.absolute())
 
-    def new_file(self):
+    def new_file(self, event=None):
         """Reset body and clear variables"""
         self.file = None
         self.text.delete('1.0', tk.END)
         self.info_var.set('>  New File  <')
 
-    def save_file(self):
+    def save_file(self, event=None):
         """Save file instantly, otherwise use Save As method"""
         if self.file:
             text = self.text.get('1.0', tk.END)
