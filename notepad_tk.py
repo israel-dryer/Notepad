@@ -14,7 +14,7 @@ class Notepad(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Notepad")
-        self.wm_state('zoomed')
+        # self.state('zoomed') # does not work for X window managers (Linux)
         self.menubar = tk.Menu(self, tearoff=False)
         self['menu'] = self.menubar
         self.menu_file = tk.Menu(self.menubar, tearoff=False)
@@ -42,7 +42,7 @@ class Notepad(tk.Tk):
 
     def open_file(self):
         """Open file and update infobar"""
-        file = filedialog.askopenfilename(title='Open', filetype=(('Text', '*.txt'), ('All Files', '*.*')))
+        file = filedialog.askopenfilename(title='Open', filetypes=(('Text', '*.txt'), ('All Files', '*.*')))
         if file:
             self.file = pathlib.Path(file)
             self.text.delete('1.0', tk.END)
@@ -65,7 +65,7 @@ class Notepad(tk.Tk):
 
     def save_file_as(self):
         """Save new file or existing file to new name or location"""
-        file = filedialog.asksaveasfilename(title="Save", filetype=(('Text', '*.txt'),('All Files', '*.*')))
+        file = filedialog.asksaveasfilename(title="Save", filetypes=(('Text', '*.txt'),('All Files', '*.*')))
         if file:
             self.file = pathlib.Path(file)
             text = self.text.get('1.0', tk.END)
